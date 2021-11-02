@@ -1,6 +1,6 @@
 # expense_planner
 
-A new Flutter project.
+This is my another full project of flutter where we can count our daily expenses in a week.
 
 ## Getting Started
 

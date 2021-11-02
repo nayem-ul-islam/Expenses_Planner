@@ -1,7 +1,3 @@
-import 'dart:ui';
-
-import 'package:expense_planner/widgets/chart.dart';
-
 import './widgets/new_transaction.dart';
 import 'package:flutter/material.dart';
 import './widgets/transaction_list.dart';
@@ -75,12 +71,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: chosenDate,
     );
     setState(() {
       _userTransaction.add(newTx);
@@ -98,6 +95,14 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransaction.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
   }
 
   @override
@@ -120,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Chart(_recentTransaction),
-            TransactionList(_userTransaction),
+            TransactionList(_userTransaction, _deleteTransaction),
           ],
         ),
       ),
